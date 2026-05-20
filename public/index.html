@@ -1,0 +1,136 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>〆Mystic Zawgyi〆</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Cinzel:wght@600;700&family=Noto+Sans+Myanmar:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <div class="shell">
+    <header class="topbar">
+      <div>
+        <div class="title">〆Mystic Zawgyi〆</div>
+        <div class="subtitle">တန်ခိုးရှင် ဇော်ဂျီ</div>
+      </div>
+      <div class="status-block">
+        <button id="lang-toggle" class="lang-toggle" type="button">MM</button>
+        <button class="mode-chip" id="mode-chip" type="button" aria-label="Change game mode">
+          <span class="mode-chip__label" id="mode-chip-label">Treasure Zawgyi</span>
+          <span class="mode-chip__action">Change</span>
+        </button>
+        <div class="status">
+          <span class="status-dot"></span>
+          <span id="status-text">Lobby ready</span>
+        </div>
+      </div>
+        <div class="controller-hint hidden" id="controller-hint" aria-live="polite">
+          <div class="hint-title" id="hint-title">Connect with Room ID</div>
+          <div class="hint-copy" id="hint-copy">
+            Waiting for <span id="hint-missing-count">2</span> controller(s).
+          </div>
+          <div class="hint-steps" id="hint-steps">
+            <span id="hint-steps-prefix">Enter</span>
+            <span id="hint-room-id">----</span>
+            <span id="hint-steps-mid">or visit</span>
+            <a id="hint-room-link" href="#" target="_blank" rel="noopener">waiting for room...</a>
+          </div>
+        </div>
+    </header>
+    <main class="arena">
+      <div id="game"></div>
+      <div id="game-3d" class="game-3d hidden">
+        <canvas id="babylon-canvas" aria-label="Alchemist's Race 3D"></canvas>
+      </div>
+
+      <section class="lobby show" id="lobby">
+        <div class="lobby-card">
+          <div class="mode-hero">
+            <div>
+              <h1 id="mode-headline">Treasure Zawgyi</h1>
+              <p id="mode-subcopy">Collect treasures, defeat crabs, and sky fish to claim victory.</p>
+            </div>
+            <button class="ghost" id="open-mode-dialog" type="button">Browse Modes</button>
+          </div>
+
+          <div class="mode-grid" data-mode-grid="lobby"></div>
+          <div class="mode-hint" id="mode-hint">Choose a mode, then pick Single or Two-Player.</div>
+
+          <div class="mode-buttons">
+            <button id="start-single">Single Player (vs AI)</button>
+            <button id="start-multi">Two-Player Local</button>
+          </div>
+
+          <div class="room-panel" id="room-panel">
+            <div class="room-info">
+              <div class="room-title" id="room-title">Room ID</div>
+              <div class="room-code" id="room-code">----</div>
+              <div class="room-meta">
+                <span id="room-meta-mode-label">Mode</span>: <span id="room-mode">Treasure Zawgyi</span> •
+                <span id="room-meta-connected-label">Connected controllers</span>: <span id="connected-count">0</span>
+              </div>
+              <div class="room-link"><a id="room-link" href="#" target="_blank" rel="noopener">Waiting for room...</a></div>
+            </div>
+            <canvas id="room-qr" width="140" height="140" aria-label="QR code"></canvas>
+          </div>
+
+          <button class="primary" id="start-race" disabled>Start Race</button>
+        </div>
+      </section>
+
+      <section class="result hidden" id="result">
+        <div class="result-card">
+          <div class="result-emblem">
+            <div class="result-orb"></div>
+            <div class="result-glow"></div>
+          </div>
+          <div class="result-ribbon">Mythic Relic Secured</div>
+          <div class="winner-dance">
+            <div id="winner-dancer" class="lottie-dancer" role="img" aria-label="Zawgyi victory dance"></div>
+            <div class="dance-shadow"></div>
+          </div>
+          <h2 id="result-title">Relic Found</h2>
+          <p id="result-copy">Prepare for another hunt.</p>
+          <div class="result-actions">
+            <button id="rematch-race">Rematch</button>
+            <button id="restart-race">Back to Lobby</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="mode-dialog hidden" id="mode-dialog">
+        <div class="mode-dialog-card">
+          <div class="mode-dialog-header">
+            <div>
+              <h2>Choose Your Mode</h2>
+              <p id="mode-dialog-copy">Select a mode to preview its objectives.</p>
+            </div>
+            <button class="icon-btn" id="mode-dialog-close" type="button" aria-label="Close mode dialog">✕</button>
+          </div>
+          <div class="mode-grid mode-grid-dialog" data-mode-grid="dialog"></div>
+          <div class="mode-dialog-actions">
+            <button id="mode-cancel" type="button">Cancel</button>
+            <button class="primary" id="mode-confirm" type="button">Activate Mode</button>
+          </div>
+        </div>
+      </section>
+    </main>
+    <footer class="footer">
+      <div id="footer-phone">Phone: Left joystick move/levitate • Right ABXY skills</div>
+      <div id="footer-keyboard">Keyboard: P1 Move A/D + W/F/R/Shift, P2 Move Left/Right + Up/L/O/Enter</div>
+      <div id="footer-fullscreen">Fullscreen: F</div>
+    </footer>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/qrcode/build/qrcode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/lottie-web@5.12.2/build/player/lottie.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/phaser@3.80.1/dist/phaser.min.js"></script>
+  <script src="/vendor/babylonjs/babylon.js"></script>
+  <script src="/vendor/babylonjs-gui/babylon.gui.min.js"></script>
+  <script type="module" src="js/main.js"></script>
+</body>
+</html>

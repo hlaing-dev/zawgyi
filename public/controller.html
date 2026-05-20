@@ -1,0 +1,69 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no, viewport-fit=cover" />
+  <title>〆Mystic Zawgyi〆 Controller</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Barlow:wght@400;600&family=Cinzel:wght@600&family=Noto+Sans+Myanmar:wght@400;600&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="controller.css" />
+</head>
+<body>
+  <div class="controller-shell">
+    <header>
+      <button id="lang-toggle" class="lang-toggle" type="button">MM</button>
+      <button id="sync-btn" class="sync-btn" type="button">SWCAR</button>
+      <div class="controller-title" id="controller-title">Flying Zawgyi</div>
+      <div class="controller-sub"><span id="room-label">Room</span> <span id="room-id">----</span> • <span id="player-label">Player</span> <span id="player-slot">?</span></div>
+    </header>
+
+    <section class="join-panel">
+      <label for="room-input" id="room-input-label">Enter Room ID</label>
+      <div class="join-row">
+        <input id="room-input" type="text" inputmode="text" autocomplete="off" maxlength="6" placeholder="AB12" />
+        <button id="join-btn">Connect</button>
+      </div>
+      <div class="join-hint" id="join-hint">Scan QR or enter the room ID above.</div>
+    </section>
+
+    <main class="controls">
+      <section class="joystick-panel">
+        <div class="joystick" id="joystick" aria-label="Movement joystick">
+          <div class="joystick-base"></div>
+          <div class="joystick-stick" id="joystick-stick"></div>
+        </div>
+        <div class="joystick-label" id="joystick-label">Move / Fly</div>
+      </section>
+
+      <section class="buttons-panel">
+        <div class="button-grid">
+          <button class="action-btn" data-action="y" data-label="Y">
+            <span class="btn-label">Y</span>
+            <span class="btn-name" data-i18n="smoke">Smoke Bomb</span>
+          </button>
+          <button class="action-btn" data-action="x" data-label="X">
+            <span class="btn-label">X</span>
+            <span class="btn-name" data-i18n="alchemy">Alchemy</span>
+          </button>
+          <button class="action-btn" data-action="b" data-label="B">
+            <span class="btn-label">B</span>
+            <span class="btn-name" data-i18n="brew">Brew</span>
+          </button>
+          <button class="action-btn" data-action="a" data-label="A">
+            <span class="btn-label">A</span>
+            <span class="btn-name" data-i18n="confirm">Confirm</span>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <footer>
+      <div id="status">Connecting…</div>
+    </footer>
+  </div>
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="controller.js"></script>
+</body>
+</html>
