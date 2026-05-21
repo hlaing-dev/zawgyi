@@ -1,0 +1,75 @@
+### Node / JavaScript
+node_modules/
+
+# Logs
+logs/
+*.log
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+pnpm-debug.log*
+lerna-debug.log*
+
+# Runtime data
+pids/
+*.pid
+*.pid.lock
+
+# Test / coverage outputs
+coverage/
+.nyc_output/
+*.lcov
+
+# Build outputs (adjust/remove if you intentionally commit these)
+dist/
+build/
+out/
+.cache/
+.eslintcache
+.stylelintcache
+*.tsbuildinfo
+.parcel-cache/
+.turbo/
+.next/
+.nuxt/
+.svelte-kit/
+
+# Dependency caches / installs (keep lockfiles)
+.npm/
+.pnpm-store/
+.pnp.*
+.yarn/cache/
+.yarn/unplugged/
+.yarn/build-state.yml
+.yarn/install-state.gz
+.yarn/patches/
+
+### Environment / secrets
+.env
+.env.*
+!.env.example
+!.env.sample
+
+### Editor / IDE
+.vscode/
+!.vscode/extensions.json
+!.vscode/settings.json
+!.vscode/launch.json
+!.vscode/tasks.json
+.idea/
+*.iml
+
+### OS junk
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+
+### Optional: local SSL certs / keys
+*.pem
+*.key
+*.crt
